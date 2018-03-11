@@ -84,7 +84,7 @@ void list::add(int pos, Elem e, const List& l)        /* inserisce l'elemento in
 }
 
 
-void list::addRear(Elem e,  const List& l)        /* inserisce l'elemento alla fine della lista */
+void list::addRear(Elem e,  const List& l)        /* inserisce l'elemento alla fine della lista */ //errore
 {
   //list::node* cur = new list::node;
   /*list::List newelem = new list::List;
@@ -110,7 +110,7 @@ void list::addRear(Elem e,  const List& l)        /* inserisce l'elemento alla f
 }
 
 
-void list::addFront(Elem e, const List& l)        /* inserisce l'elemento all'inizio della lista */
+void list::addFront(Elem e, const List& l)        /* inserisce l'elemento all'inizio della lista */ //errore
 {
   list::List aux = new list::node;
   aux->info = e;
