@@ -2,8 +2,6 @@
 
 #include "ASD-doubly-linked-list.h"
 
-//prova commento by PIKKA
-
 using namespace list;
 
 struct list::node {  // descrivo qui, fuori dal namespace, come e' fatta la struttura node: i dettagli interni non saranno visibili dal main
@@ -63,6 +61,12 @@ void print(const List& l)           /* stampa la lista */
 
 void list::clear(const List& l)                 /* "smantella" la lista svuotandola */
 {
+  delete l;
+  /*List cursore = l;
+  while (cursore->next != l) {
+    delete cursore*/
+
+  //}
 
 }
 
@@ -101,9 +105,9 @@ void list::addRear(Elem e,  const List& l)        /* inserisce l'elemento alla f
   aux->info = e;
   aux->prev = emptyList;
   aux->next = emptyList;
-  if(l == emptyList){
+  /*if(l == emptyList){                     //errore! la lista non è mai == null!
     l = aux;
-  }else
+  }else*/
   while (tmp->next != l) {
     //tmp
   }
@@ -115,14 +119,15 @@ void list::addFront(Elem e, const List& l)        /* inserisce l'elemento all'in
 {
   list::List aux = new list::node;
   aux->info = e;
-  if (l == emptyList)
+  if (l == emptyList) //secondo me non è mai nulla!!!!
   aux->next = aux;
-  else
-  List tmp = list;
-  while (tmp->next != list)
-  tmp = tmp->next;
-  tmp->next = aux;
-  aux->next = list;
+  else{
+    List tmp = l;
+    while (tmp->next != l)
+    tmp = tmp->next;
+    tmp->next = aux;
+    aux->next = l;
+  }
 }
 
 
@@ -134,6 +139,18 @@ void list::removePos(int pos, const List& l)           /* cancella l'elemento in
 
 void list::removeEl(Elem e, const List& l)          /* cancella l'elemento elem, se presente, dalla lista */
 {
+  List cursore = l;
+  List precc = emptyList;                           //nodo preccedente al cursore
+
+  while(cursore->next != l && cursore->info != e){
+    precc = cursore;
+    cursore = cursore->next;
+  }
+  //ELIMINO IL NODO DELLA LISTA CON INFO == e
+  if(cursore->info == e){
+    precc->next = cursore->prev;
+
+  }
 
 }
 
@@ -155,7 +172,7 @@ int list::size(const List& l)           /* restituisce la dimensione della lista
 {
   int sizelist = 0;
   list::node* cur = new list::node;
-  while(cur != l){ //&& cur->Elem !=
+  while(cur->next != l){ //&& cur->Elem !=
     ++sizelist;
     cur=cur->next;
   }
