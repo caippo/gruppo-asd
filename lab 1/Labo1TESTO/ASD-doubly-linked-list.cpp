@@ -83,8 +83,7 @@ void list::set(int pos, Elem e, const List& l)        /* modifica l'elemento in 
 }
 
 
-void list::add(int pos, Elem e, const List& l)        /* inserisce l'elemento in posizione pos, shiftando a destra gli altri elementi */
-{
+void list::add(int pos, Elem e, const List& l)        /* inserisce l'elemento in posizione pos, shiftando a destra gli altri elementi */{
 
 }
 
