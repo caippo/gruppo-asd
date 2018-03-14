@@ -129,6 +129,7 @@ void list::addFront(Elem e, const List& l)        /* inserisce l'elemento all'in
     aux->next = l;
   }
 }
+aaaa
 
 
 void list::removePos(int pos, const List& l)           /* cancella l'elemento in posizione pos dalla lista */
