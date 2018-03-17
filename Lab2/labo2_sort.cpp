@@ -196,17 +196,11 @@ void quickSortTrivial(vector<int>& v)
 {
 
       
-
-
 void qs(vector<int>& v, int low, int high){
   if (low < high)
   {
-      /* pi is partitioning index, arr[p] is now
-         at right place */
-      int pi = partition(v, low, high);
+      int pi = partition(v, low, high); // pivot
 
-      // Separately sort elements before
-      // partition and after partition
       qs(v, low, pi - 1);
       qs(v, pi + 1, high);
   }
