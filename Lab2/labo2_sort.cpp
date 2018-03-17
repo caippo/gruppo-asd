@@ -1,13 +1,13 @@
 #include "labo2_sort.h"
 
-<<<<<<< HEAD
+
 void qs(vector<int>& v, int begin, int end);
 
-=======
+
 /***************************************************************************************
         SWAP
 ****************************************************************************************/
->>>>>>> f7267d4f9a08c22a8ed22a22fc53cc68d85e600d
+
 void scambia(vector<int>& v, int i, int j)
 {
   int tmp = v[j];
@@ -189,62 +189,14 @@ int partition (vector<int>& v, int low, int high)
 ***************************************************************************************/
 
 void quickSortTrivial(vector<int>& v)
-<<<<<<< HEAD
+
 {
    /* Implementare quickSort banale con partizione in place */
    qs(v, 0, v.size()-1);
+{
 
-=======
-{/*
+      
 
-      unsigned int  l,r,p,piv;
-
-      while (v[v.begin()]<v[v.size()])
-      {
-          l = v[v.begin()];
-          p = 0 ;
-          r = v[v.size()];
-
-          piv = v[p];
-
-
-          partition ( v, l, r);
-
-
-          list[p]=list[r];
-          list[r]=piv;
-          r--;
-
-
-          if ((r-v[v.begin()])<(v[v.size()]-l))
-          {
-              qs(v, v[v.begin()], r);
-              v[v.begin()]=l;
-          }
-          else
-          {
-              qs(v, l, v[v.size()]);
-              v[v.size()]=r;
-          }
-      }
-*/}
-
-void qs (vector <int> v ,unsigned int l ,unsigned int  r){
-/*
-    if (l < r)
-    {
-
-        int m = l+(r-l)/2;
-
-
-        qs(arr, l, m);
-        qs(arr,m+1, r);
-
-        quickSortTrivial(v();
-    }
-*/
->>>>>>> f7267d4f9a08c22a8ed22a22fc53cc68d85e600d
-}
 
 void qs(vector<int>& v, int low, int high){
   if (low < high)
