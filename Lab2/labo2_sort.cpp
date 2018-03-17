@@ -214,5 +214,7 @@ void qs(vector<int>& v, int low, int high){
 
 void quickSortRandom(vector<int>& v)
 {
+	int rand;
+	rand = rand() % v.size //? per il pivot
    /* Implementare quickSort randomizzato con partizione in place */
 }
