@@ -239,7 +239,7 @@ void quickSortRandom(vector<int>& v)
 }
 
 void qsrand(vector<int>& v, int low, int high){
-  //srand(time(NULL)); // srand ha un costo non trascurabile: poiché basta chiamarla una sola volta all'interno del programma per fissare il seme della
+  srand(time(NULL)); // srand ha un costo non trascurabile: poiché basta chiamarla una sola volta all'interno del programma per fissare il seme della
                       // generazione pseudo-casuale, possiamo chiamarla in quickSortRandom prima di  qsrand(v, 0, v.size()-1) e non chiamarla più!
   if (low < high)
   {
@@ -258,7 +258,7 @@ int partizionarnd(vector<int>& v, int inizio, int fine)
    int i = inizio+1;
    for (int j=inizio+1; j<=fine; ++j)
        {
-       if (v[j] < v[i]) // confronto con il pivot che e' all'inizio
+       if (v[j] < v[inizio]) // confronto con il pivot che e' all'inizio
           {
           scambia(v, i, j);
           ++i;
