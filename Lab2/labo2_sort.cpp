@@ -1,9 +1,11 @@
 #include "labo2_sort.h"
+#include <ctime>
 
 
 void qs(vector<int>& v, int begin, int end);
-
-
+int partizionarnd(vector<int>& v, int inizio, int fine);
+//int partitionrnd (vector<int>& v, int low, int high);
+void qsrand(vector<int>& v, int low, int high);
 /***************************************************************************************
         SWAP
 ****************************************************************************************/
@@ -19,7 +21,7 @@ void scambia(vector<int>& v, int i, int j)
 /***************************************************************************************
         PARTIZIONE IN PLACE
 ****************************************************************************************/
-int partition(vector<int> &a,int l,int r){
+/*int partition(vector<int> &a,int l,int r){
   int p;
   int i;
   i = l +1;
@@ -33,7 +35,7 @@ int partition(vector<int> &a,int l,int r){
   }
 scambia (a , a[l], a[i-1]);
 return i;//indice del pivot
-}
+}*/
 
 
 
@@ -166,10 +168,25 @@ void mergeSort(vector<int>& v)
 
 int partition (vector<int>& v, int low, int high)
 {
-    int pivot = v[0];    // pivot
+
+  int pivot = low;
+  scambia(v, pivot, low);
+      // metto il pivot all'inizio della sequenza da riordinare
+      //- anche se sarebbe inutile vista la scelta fatta
+  int i = low + 1;
+  for(int j= low + 1; j<=high; ++j){
+    if(v[j] < v[low]){
+      scambia(v, i, j);
+      ++i;
+    }
+  }
+  scambia(v, low, i-1);
+  return i-1;
+    /*int pivot = v[0];    // pivot
     int i = (low - 1);  // Index of smaller element
 
-    for (int j = low; j <= high- 1; j++)
+    //for (int j = low; j <= high- 1; j++)
+    for(int j= low + 1; j<= high; ++j)
     {
         // If current element is smaller than or
         // equal to pivot
@@ -179,8 +196,10 @@ int partition (vector<int>& v, int low, int high)
             scambia(v,i, j);
         }
     }
-    scambia(v, (i + 1), high);
-    return (i + 1);
+    //scambia(v, (i + 1), high);
+    scambia(v,(i-1),high);
+    //return (i + 1);
+    return i;*/
 }
 
 
@@ -189,18 +208,16 @@ int partition (vector<int>& v, int low, int high)
 ***************************************************************************************/
 
 void quickSortTrivial(vector<int>& v)
-
 {
    /* Implementare quickSort banale con partizione in place */
    qs(v, 0, v.size()-1);
-{
+}
 
-      
+
 void qs(vector<int>& v, int low, int high){
   if (low < high)
   {
       int pi = partition(v, low, high); // pivot
-
       qs(v, low, pi - 1);
       qs(v, pi + 1, high);
   }
@@ -214,7 +231,39 @@ void qs(vector<int>& v, int low, int high){
 
 void quickSortRandom(vector<int>& v)
 {
-	int rand;
-	rand = rand() % v.size //? per il pivot
+  qsrand(v, 0, v.size()-1);
+
+	//int rand;
+	//rand = rand() % v.size //? per il pivot
    /* Implementare quickSort randomizzato con partizione in place */
+}
+
+void qsrand(vector<int>& v, int low, int high){
+  //srand(time(NULL)); // srand ha un costo non trascurabile: poiché basta chiamarla una sola volta all'interno del programma per fissare il seme della
+                      // generazione pseudo-casuale, possiamo chiamarla in quickSortRandom prima di  qsrand(v, 0, v.size()-1) e non chiamarla più!
+  if (low < high)
+  {
+      int pi = partizionarnd(v, low, high); // pivot
+      qsrand(v, low, pi - 1);
+      qsrand(v, pi + 1, high);
+  }
+}
+
+int partizionarnd(vector<int>& v, int inizio, int fine)
+{
+   int pivotIndex = inizio+rand()%((fine+1)-inizio);//(fine-inizio+1);          //((fine-1)-inizio);
+                    // scelgo un indice a caso tra inizio e fine: sara' il mio pivot
+   scambia(v, pivotIndex, inizio); // metto il pivot all'inizio della sequenza da riordinare
+   //int p = v[pivotIndex];
+   int i = inizio+1;
+   for (int j=inizio+1; j<=fine; ++j)
+       {
+       if (v[j] < v[i]) // confronto con il pivot che e' all'inizio
+          {
+          scambia(v, i, j);
+          ++i;
+          }
+       }
+ scambia(v, inizio, i-1);
+ return i-1;
 }
