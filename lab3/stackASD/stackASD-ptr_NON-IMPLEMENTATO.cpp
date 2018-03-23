@@ -12,17 +12,7 @@ struct stack::cell {
 /****************************************************************/
 bool stack::isEmpty(const Stack& s)
 {
-  bool empty = false;
-  if (s == EMPTYSTACK){
-    return true;
-  }else{
-    Stack cursore = s;
-    while (cursore != EMPTYSTACK) {
-      //if(cursore->elem ==)
-      cursore = cursore->next;
-      return false;
-    }
-  }
+  return(s==EMPTYSTACK);
 
 }
 
@@ -30,12 +20,15 @@ bool stack::isEmpty(const Stack& s)
 /****************************************************************/
 void stack::push(const Elem x, Stack& s)
 {   //inserimento in cima
+  Stack newcell = new stack::cell;
+  newcell->elem = x;
+
   if(s != EMPTYSTACK){
-    Stack newcell = EMPTYSTACK;
-    newcell->elem = x;
     newcell->next = s;
-    s = newcell;
+  }else{
+    newcell->next = EMPTYSTACK;
   }
+  s = newcell;
   return;
 }
 
@@ -45,15 +38,11 @@ Elem stack::pop(Stack& s)
   if(s == EMPTYSTACK){
     return EMPTYELEM;
   }else{
-    Stack cursore = s;
-    Stack prev = EMPTYSTACK;
-    while (cursore != EMPTYSTACK) {
-      prev = cursore;
-      cursore= cursore->next;
-    }
-
-    //prev =
-
+    Stack aux = s;
+    Elem e = s->elem;
+    s = s->next;
+    delete aux;
+    return e;
   }
 }
 
@@ -64,14 +53,9 @@ Elem stack::top(Stack& s)
   if(s == EMPTYSTACK){
     return EMPTYELEM;
   }else{
-    Stack cursore = s;
-    Stack prev = EMPTYSTACK;
-    while (cursore != EMPTYSTACK) {
-      prev = cursore;
-      cursore= cursore->next;
+    return s->elem;
     }
 
-    return prev->next->elem;      //RITORNO IL NODO DELL'ULTIMO ELEMENTO!
 
     //prev =
 
