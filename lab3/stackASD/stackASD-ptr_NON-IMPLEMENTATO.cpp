@@ -12,20 +12,49 @@ struct stack::cell {
 /****************************************************************/
 bool stack::isEmpty(const Stack& s)
 {
-return true;
+  bool empty = false;
+  if (s == EMPTYSTACK){
+    return true;
+  }else{
+    Stack cursore = s;
+    while (cursore != EMPTYSTACK) {
+      //if(cursore->elem ==)
+      cursore = cursore->next;
+      return false;
+    }
+  }
+
 }
 
 
 /****************************************************************/
-void stack::push(const Elem x, Stack& s) 
-{
-    return;
+void stack::push(const Elem x, Stack& s)
+{   //inserimento in cima
+  if(s != EMPTYSTACK){
+    Stack newcell = EMPTYSTACK;
+    newcell->elem = x;
+    newcell->next = s;
+    s = newcell;
+  }
+  return;
 }
 
 /****************************************************************/
 Elem stack::pop(Stack& s)
 {
+  if(s == EMPTYSTACK){
     return EMPTYELEM;
+  }else{
+    Stack cursore = s;
+    Stack prev = EMPTYSTACK;
+    while (cursore != EMPTYSTACK) {
+      prev = cursore;
+      cursore= cursore->next;
+    }
+
+    prev =
+
+  }
 }
 
 
@@ -76,7 +105,7 @@ cell* aux = s;
 cout << endl;
 while (aux != EMPTYSTACK)
    {
-   cout << aux->elem << "; "; 
+   cout << aux->elem << "; ";
    aux = aux->next;
    }
 std::cout << endl;
