@@ -71,7 +71,7 @@ Elem stack::top(Stack& s)
       cursore= cursore->next;
     }
 
-    return prev->next;      //RITORNO IL NODO DELL'ULTIMO ELEMENTO!
+    return prev->next->elem;      //RITORNO IL NODO DELL'ULTIMO ELEMENTO!
 
     //prev =
 
