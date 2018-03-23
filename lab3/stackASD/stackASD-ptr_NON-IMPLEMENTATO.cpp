@@ -52,7 +52,7 @@ Elem stack::pop(Stack& s)
       cursore= cursore->next;
     }
 
-    prev =
+    //prev =
 
   }
 }
@@ -61,7 +61,22 @@ Elem stack::pop(Stack& s)
 /****************************************************************/
 Elem stack::top(Stack& s)
 {
+  if(s == EMPTYSTACK){
     return EMPTYELEM;
+  }else{
+    Stack cursore = s;
+    Stack prev = EMPTYSTACK;
+    while (cursore != EMPTYSTACK) {
+      prev = cursore;
+      cursore= cursore->next;
+    }
+
+    return prev->next;      //RITORNO IL NODO DELL'ULTIMO ELEMENTO!
+
+    //prev =
+
+  }
+    //return EMPTYELEM;
 }
 
 
