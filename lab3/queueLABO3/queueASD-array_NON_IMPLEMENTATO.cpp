@@ -14,7 +14,7 @@ Queue queue::createEmpty()
     aux->size = 0;
     aux->maxsize = BLOCKDIM;
 
-    return aux->;
+    return aux; //non capisco come ritornare il puntatore... by Pikka
 
 }
 
