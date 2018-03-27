@@ -10,9 +10,11 @@ using namespace queue;
 /****************************************************************/
 Queue queue::createEmpty()
 {
-   Queue * q;
-   q = new Queue[1];
-   return q;
+    Queue* aux = new Queue[BLOCKDIM];
+    aux->size = 0;
+    aux->maxsize = BLOCKDIM;
+
+    return aux->;
 
 }
 
@@ -33,7 +35,8 @@ Elem queue::dequeue(Queue& l) // rimuove il primo elemento e lo restituisce
 /****************************************************************/
 Elem queue::first(Queue& l) // restituisce il primo elemento
 {
-   return EMPTYELEM;
+    return(l.queue[0]);
+   //return EMPTYELEM;
 }
 
 

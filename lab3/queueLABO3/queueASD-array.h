@@ -1,22 +1,21 @@
 #include <iostream>
 #include <stdexcept>
-#include <vector> 
-#include <fstream> 
+#include <vector>
+#include <fstream>
 
 using namespace std;
 
 // Implementa QUEUE con strutture indicizzate e tipo base Elem dotato di ordinamento
- 
+
 namespace queue{
 
 const int BLOCKDIM = 1000;
-typedef int Elem;      // tipo base 
-struct queue{
+typedef int Elem;      // tipo base
+typedef struct {
     Elem* queue;
     int size;
     int maxsize;
-};
-typedef queue Queue;
+} Queue;
 
 const int FINEINPUT = -1000000;
 const int EMPTYELEM = -1000000;
