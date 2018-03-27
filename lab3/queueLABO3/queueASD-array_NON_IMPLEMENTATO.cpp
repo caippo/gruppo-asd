@@ -10,8 +10,10 @@ using namespace queue;
 /****************************************************************/
 Queue queue::createEmpty()
 {
-   Queue q;
+   Queue * q;
+   q = new Queue[1];
    return q;
+
 }
 
 /****************************************************************/
@@ -38,7 +40,8 @@ Elem queue::first(Queue& l) // restituisce il primo elemento
 /****************************************************************/
 bool queue::isEmpty(const Queue& l)
 {
-   return true;
+   //return true;
+   return (l.size == 0);
 }
 
 
@@ -62,12 +65,12 @@ Queue readFromStdin()
 /****************************************************************/
 Queue readFromStream(istream& str)
 {
-    Queue l = createEmpty();        
+    Queue l = createEmpty();
     int dato;
     str>>dato;
     if (!str) throw runtime_error("Errore inserimento dati\n");
     while (dato!= FINEINPUT)  // assumiamo che il segnale di fine input nel file sia  FINEINPUT
-        {     
+        {
         enqueue(dato, l);   // aggiunge l'elemento alla fine della coda
         str>>dato;
         if (!str) throw runtime_error("Errore inserimento dati\n");
@@ -80,6 +83,6 @@ void print(const Queue& l)
 {
 cout << endl;
 for (int i=0; i<l.size; ++i)
-   cout << l.queue[i] << "; "; 
+   cout << l.queue[i] << "; ";
 cout << endl;
 }
