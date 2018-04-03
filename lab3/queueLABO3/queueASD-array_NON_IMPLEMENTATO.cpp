@@ -41,11 +41,6 @@ void queue::enqueue(Elem e, Queue& l) // aggiunge e in coda
 Elem queue::dequeue(Queue& l) // rimuove il primo elemento e lo restituisce
 {
   Elem elemdarem = l.queue[0];
-<<<<<<< HEAD
-=======
-  std::cout << "elemdarem " << elemdarem << '\n';
-  std::cout << "size queue = " << l.size << '\n';
->>>>>>> aaac0170036fe8aa30720d05f56befe475cfab1e
 
   Elem * aux = new Elem[BLOCKDIM];
 
