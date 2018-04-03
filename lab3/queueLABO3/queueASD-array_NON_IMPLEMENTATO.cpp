@@ -10,17 +10,29 @@ using namespace queue;
 /****************************************************************/
 Queue queue::createEmpty()
 {
-    Queue* aux = new Queue[BLOCKDIM];
-    aux->size = 0;
-    aux->maxsize = BLOCKDIM;
+    Queue aux;
+    aux.queue = new Elem[BLOCKDIM];
+    aux.size = 0;
+    aux.maxsize = BLOCKDIM;
 
-    return aux; //non capisco come ritornare il puntatore... by Pikka
-
+    return aux;
 }
 
 /****************************************************************/
 void queue::enqueue(Elem e, Queue& l) // aggiunge e in coda
 {
+  /*if(l.size >= l.maxsize){
+    Queue newqueue;
+    newqueue.queue = new Elem[BLOCKDIM+l.size];
+    newqueue.size = l.size;
+    newqueue.maxsize = BLOCKDIM + l.size;
+
+  }else{*/
+    //l.queue[0] = e;
+    //for(int i=0; i<l.size; ++i){}
+    l.queue[l.size] = e;
+    ++l.size;
+  //}
   return;
 }
 
@@ -28,7 +40,21 @@ void queue::enqueue(Elem e, Queue& l) // aggiunge e in coda
 /****************************************************************/
 Elem queue::dequeue(Queue& l) // rimuove il primo elemento e lo restituisce
 {
-   return EMPTYELEM;
+  Elem elemdarem = l.queue[0];
+  std::cout << "elemdarem " << elemdarem << '\n';
+  std::cout << "size queue = " << l.size << '\n';
+
+  Elem * aux = new Elem[BLOCKDIM];
+
+  for(int i=0;i<l.size-1; ++i){
+      aux[i] = l.queue[i+1];
+  }
+
+  l.queue = aux;
+  --l.size;
+
+  return elemdarem;
+   //return EMPTYELEM;
 }
 
 
