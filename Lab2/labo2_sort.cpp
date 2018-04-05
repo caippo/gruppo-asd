@@ -4,8 +4,8 @@
 
 void qs(vector<int>& v, int begin, int end);
 int partizionarnd(vector<int>& v, int inizio, int fine);
-//int partitionrnd (vector<int>& v, int low, int high);
 void qsrand(vector<int>& v, int low, int high);
+
 /***************************************************************************************
         SWAP
 ****************************************************************************************/
@@ -16,28 +16,6 @@ void scambia(vector<int>& v, int i, int j)
   v[j] = v[i];
   v[i] = tmp;
 }
-
-
-/***************************************************************************************
-        PARTIZIONE IN PLACE
-****************************************************************************************/
-/*int partition(vector<int> &a,int l,int r){
-  int p;
-  int i;
-  i = l +1;
-  p = a[i];
-  for (int j = l +1 ; j <= r ; ++j  ){
-    if (a[j]<p){
-      scambia (a, a[j], a[i]);
-      i+=1;
-    }
-    else break ;
-  }
-scambia (a , a[l], a[i-1]);
-return i;//indice del pivot
-}*/
-
-
 
 /**************************************************************************************
 				SELECTION SORT
@@ -55,8 +33,6 @@ void selectionSort(vector<int>& v)
      scambia(v, i, current_min_index);
    }
 }
-
-
 
 /**************************************************************************************
 				INSERTION SORT
@@ -97,8 +73,6 @@ void bubbleSort(vector<int>& v)
       if (!scambiati) return;
       }
 }
-
-
 
 /**************************************************************************************
 				   MERGESORT
@@ -168,11 +142,9 @@ void mergeSort(vector<int>& v)
 
 int partition (vector<int>& v, int low, int high)
 {
-
   int pivot = low;
   scambia(v, pivot, low);
-      // metto il pivot all'inizio della sequenza da riordinare
-      //- anche se sarebbe inutile vista la scelta fatta
+
   int i = low + 1;
   for(int j= low + 1; j<=high; ++j){
     if(v[j] < v[low]){
@@ -182,24 +154,6 @@ int partition (vector<int>& v, int low, int high)
   }
   scambia(v, low, i-1);
   return i-1;
-    /*int pivot = v[0];    // pivot
-    int i = (low - 1);  // Index of smaller element
-
-    //for (int j = low; j <= high- 1; j++)
-    for(int j= low + 1; j<= high; ++j)
-    {
-        // If current element is smaller than or
-        // equal to pivot
-        if (v[j] <= pivot)
-        {
-            i++;    // increment index of smaller element
-            scambia(v,i, j);
-        }
-    }
-    //scambia(v, (i + 1), high);
-    scambia(v,(i-1),high);
-    //return (i + 1);
-    return i;*/
 }
 
 
@@ -212,7 +166,6 @@ void quickSortTrivial(vector<int>& v)
    /* Implementare quickSort banale con partizione in place */
    qs(v, 0, v.size()-1);
 }
-
 
 void qs(vector<int>& v, int low, int high){
   if (low < high)
@@ -231,16 +184,12 @@ void qs(vector<int>& v, int low, int high){
 
 void quickSortRandom(vector<int>& v)
 {
+  /* Implementare quickSort randomizzato con partizione in place */
   qsrand(v, 0, v.size()-1);
-
-	//int rand;
-	//rand = rand() % v.size //? per il pivot
-   /* Implementare quickSort randomizzato con partizione in place */
 }
 
 void qsrand(vector<int>& v, int low, int high){
-  srand(time(NULL)); // srand ha un costo non trascurabile: poiché basta chiamarla una sola volta all'interno del programma per fissare il seme della
-                      // generazione pseudo-casuale, possiamo chiamarla in quickSortRandom prima di  qsrand(v, 0, v.size()-1) e non chiamarla più!
+  srand(time(NULL));
   if (low < high)
   {
       int pi = partizionarnd(v, low, high); // pivot
@@ -251,14 +200,13 @@ void qsrand(vector<int>& v, int low, int high){
 
 int partizionarnd(vector<int>& v, int inizio, int fine)
 {
-   int pivotIndex = inizio+rand()%((fine+1)-inizio);//(fine-inizio+1);          //((fine-1)-inizio);
-                    // scelgo un indice a caso tra inizio e fine: sara' il mio pivot
-   scambia(v, pivotIndex, inizio); // metto il pivot all'inizio della sequenza da riordinare
-   //int p = v[pivotIndex];
+   int pivotIndex = inizio+rand()%((fine+1)-inizio);
+
+   scambia(v, pivotIndex, inizio);
    int i = inizio+1;
    for (int j=inizio+1; j<=fine; ++j)
        {
-       if (v[j] < v[inizio]) // confronto con il pivot che e' all'inizio
+       if (v[j] < v[inizio])
           {
           scambia(v, i, j);
           ++i;
