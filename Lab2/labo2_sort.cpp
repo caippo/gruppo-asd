@@ -161,18 +161,16 @@ int partition (vector<int>& v, int low, int high)
 				QUICKSORT CON SCELTA "BANALE" DEL PIVOT
 ***************************************************************************************/
 
-void quickSortTrivial(vector<int>& v)
-{
+void quickSortTrivial(vector<int>& v){
    /* Implementare quickSort banale con partizione in place */
    qs(v, 0, v.size()-1);
 }
 
 void qs(vector<int>& v, int low, int high){
-  if (low < high)
-  {
-      int pi = partition(v, low, high); // pivot
-      qs(v, low, pi - 1);
-      qs(v, pi + 1, high);
+  if (low < high){
+      int pivot = partition(v, low, high); // pivot
+      qs(v, low, pivot - 1);
+      qs(v, pivot + 1, high);
   }
 
 }
@@ -182,36 +180,31 @@ void qs(vector<int>& v, int low, int high){
 				QUICKSORT RANDOMIZZATO
 ***************************************************************************************/
 
-void quickSortRandom(vector<int>& v)
-{
+void quickSortRandom(vector<int>& v){
   /* Implementare quickSort randomizzato con partizione in place */
   qsrand(v, 0, v.size()-1);
 }
 
-void qsrand(vector<int>& v, int low, int high){
+void qsrand(vector<int>& v, int piccolo, int grande){
   srand(time(NULL));
-  if (low < high)
-  {
-      int pi = partizionarnd(v, low, high); // pivot
-      qsrand(v, low, pi - 1);
-      qsrand(v, pi + 1, high);
+  if (piccolo < grande){
+      int pi = partizionarnd(v, piccolo, grande); // pivot
+      qsrand(v, piccolo, pi - 1);
+      qsrand(v, pi + 1, grande);
   }
 }
 
-int partizionarnd(vector<int>& v, int inizio, int fine)
-{
-   int pivotIndex = inizio+rand()%((fine+1)-inizio);
+int partizionarnd(vector<int>& v, int inizio, int fine){
+  int pivotIndex = inizio+rand()%((fine+1)-inizio);
 
-   scambia(v, pivotIndex, inizio);
-   int i = inizio+1;
-   for (int j=inizio+1; j<=fine; ++j)
-       {
-       if (v[j] < v[inizio])
-          {
-          scambia(v, i, j);
-          ++i;
-          }
-       }
+  scambia(v, pivotIndex, inizio);
+  int i = inizio+1;
+  for (int j=inizio+1; j<=fine; ++j){
+    if (v[j] < v[inizio]){
+      scambia(v, i, j);
+      ++i;
+    }
+  }
  scambia(v, inizio, i-1);
  return i-1;
 }
