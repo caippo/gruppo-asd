@@ -3,20 +3,20 @@
 using namespace stack;
 
 /****************************************************************/
-bool stack::isEmpty(const Stack& s)                                                    // DA CONTROLLARE
+bool stack::isEmpty(const Stack& s)                                                    
 {
-    return (s==NULL);
+    return (s==EMPTYQUEUE);
 
 }
 
 /****************************************************************/
-void stack::push(const Elem x, Stack& s)                                               // DA CONTROLLARE
+void stack::push(const Elem x, Stack& s)                                               
 {
   if(isEmpty(s))
   {
     s= new stackcell;
     s->elem=x;
-    s->next=NULL;
+    s->next=EMPTYQUEUE;
     cout << "INSERIMENTO ELEM NELLO STACK" << std::endl;   // TEST
   }
   else
@@ -30,7 +30,7 @@ void stack::push(const Elem x, Stack& s)                                        
 }
 
 /****************************************************************/
-Elem stack::pop(Stack& s)                                                              // DA CONTROLLARE
+Elem stack::pop(Stack& s)                                                              
 {
     Elem e;
     e=s->elem;
