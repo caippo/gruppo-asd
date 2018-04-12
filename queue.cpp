@@ -23,18 +23,19 @@ void queue::enqueue(Elem e, Queue& l) // aggiunge e in coda
   {
     l= new queuecell;
     l->elem=e;
-    l->next=NULL;
-    cout << "INSERIMENTO ELEM NELLA QUEUE" << std::endl;   // TEST
+    l->next=EMPTYQUEUE;
+    cout << "INSERIMENTO ELEM NELLA QUEUE" << std::endl;   
   }
   else
   {
   Queue aux=l;
-    while(aux->next!=NULL)
+   
+    while(aux->next!=EMPTYQUEUE){
       aux=aux->next;
     aux->next=new queuecell;
     aux->next->elem=e;
-    aux->next->next=NULL;
-    cout << "INSERIMENTO ELEM NELLA QUEUE" << std::endl;   // TEST
+    aux->next->next=EMPTYQUEUE;
+    cout << "INSERIMENTO ELEM NELLA QUEUE" << std::endl;  
   }
 }
 
