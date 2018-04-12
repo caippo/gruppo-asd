@@ -38,7 +38,7 @@ bool leggi(string &str, queue::Queue &codaToken) {
       return false;
     }
     else
-      queue::enqueue(currentoken,codaToken);                                              // DA TESTARE
+      queue::enqueue(currentoken,codaToken);                                              
   }
   return true;
 }
