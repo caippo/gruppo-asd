@@ -10,14 +10,14 @@ using namespace queue;
 /****************************************************************/
 
 /****************************************************************/
-bool queue::isEmpty(const Queue& l)                                                   // IT WORK
+bool queue::isEmpty(const Queue& l)                                                  
 {
   return (l==NULL);
 
 }
 
 /****************************************************************/
-void queue::enqueue(Elem e, Queue& l) // aggiunge e in coda                           // IT WORK!
+void queue::enqueue(Elem e, Queue& l) // aggiunge e in coda                         
 {
   if (isEmpty(l))
   {
