@@ -18,7 +18,7 @@ struct queuecell{
 	queuecell *next;
 };
 typedef queuecell *Queue;  // la coda è una lista semplice
-//queuecell *ENDQ=NULL;
+typedef queue:Queue EMPTYQUEUE =nullptr;
 bool isEmpty(const Queue&);
 void enqueue(Elem, Queue&);  /* inserisce l'elemento alla fine della lista */
 Elem dequeue(Queue&);        /* cancella l'elemento in prima posizione (se esiste) e lo restituisce */
