@@ -12,7 +12,7 @@ using namespace queue;
 /****************************************************************/
 bool queue::isEmpty(const Queue& l)                                                  
 {
-  return (l==NULL);
+  return (l==EMPTYQUEUE);
 
 }
 
