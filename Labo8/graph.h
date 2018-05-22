@@ -2,13 +2,13 @@
 #include <iostream>
 #include <sstream>
 #include <stdexcept>
-#include <vector> 
-#include <fstream> 
-#include <string>         
+#include <vector>
+#include <fstream>
+#include <string>
 
 #include "list.h"
 
-using namespace std; 
+using namespace std;
 
 namespace graph {
 
@@ -19,9 +19,9 @@ struct vertexNode; // da definire nel file graph.cpp
 
 typedef vertexNode* Graph; // un grafo e' identificato dal puntatore al primo vertice inserito
 
-const Graph emptyGraph = NULL; 
+const Graph emptyGraph = NULL;
 
-// createEmptyGraph restituisce il grafo vuoto 
+// createEmptyGraph restituisce il grafo vuoto
 Graph createEmptyGraph();
 
 // Aggiunge nuovo vertice con etichetta la stringa. Fallisce se gia' presente
@@ -46,7 +46,7 @@ int numEdges(const Graph&);
 bool nodeDegree(Label, int&, const Graph&);
 
 // Verifica se due vertici sono adiacenti (ovvero se esiste un arco)
-bool areAdjacent(Label, Label, const Graph&); 
+bool areAdjacent(Label, Label, const Graph&);
 
 // Ritorna la lista di adiacenza di un vertice
 list::List adjacentList(Label, const Graph&);

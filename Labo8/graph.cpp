@@ -1,5 +1,5 @@
 #include "graph.h"
-
+//#include "list.h"
 using namespace graph;
 
 /*******************************************************************************************************/
@@ -13,6 +13,12 @@ void printAdjacent(halfEdgeVertex*& ListA);
 bool isEmptyArc(halfEdgeVertex*& a);
 Graph getVertex(const Graph,const Label); //dato il label ritorna il puntatore alla lista
 halfEdgeVertex* newAdjListNode(const Graph, const Weight, const Label);
+//void replaceElem(list::List&, list::Elem, Weight);
+
+//FUNZ AUX DEL TTD LIST
+void addFrontWithWeight(list::Elem e, Weight w, list::List& l);
+void removeTop(list::List& l);
+list::List getnext(list::List&);
 
 /* “Mezzo arco”, non tiene l'etichetta del vertice
 sorgente ma solo il puntatore al vertice
@@ -41,9 +47,21 @@ struct graph::vertexNode {
  bool visited;
 };
 
+//PROTOTIPI FUNZIONI AUX:
+void printAdjacent(halfEdgeVertex*& ListA);
+void printCity(graph::Graph& g);
+bool isEmptyArc(halfEdgeVertex*& a);
+Graph getVertex(const Graph,const Label); //dato il label ritorna il puntatore alla lista
+halfEdgeVertex* newAdjListNode(const Graph, const Weight, const Label);
+void setVisitedAll(bool, const Graph);
+bool visitDFS(Graph auxFrom, Graph auxTo, list::List& path);
+//_______________________________________________________________________________________
+
+int level;
+string t[] = {"\t", "\t\t", "\t\t\t", "\t\t\t\t", "\t\t\t\t\t", "\t\t\t\t\t\t"};
+
 // Restituisce il grafo vuoto
-Graph graph::createEmptyGraph()
-{
+Graph graph::createEmptyGraph(){
   Graph newvertice = new vertexNode;
   newvertice->label = emptyLabel;
   return newvertice;
@@ -85,7 +103,7 @@ bool graph::addVertex(Label l, Graph& g) {
 
 }
 
-//dato il label ritorna il puntatore alla lista
+//Funzione Aux: dato il label ritorna il puntatore alla lista
 Graph getVertex(const Graph g, const Label l){
   Graph aux = g;
   while (!isEmpty(aux->next) && aux->label != l) {
@@ -185,30 +203,165 @@ bool isEmptyArc(halfEdgeVertex*& a){
 
 // Ritorna il numero di vertici del grafo
 int graph::numVertices(const Graph& g){
- return 0;
+  Graph aux = g;
+  int count = 0;
+  while (!isEmpty(aux)) {
+    aux = aux->next;
+    ++count;
+  }
+ return count;
 }
 
 // Ritorna il numero di archi del grafo
 int graph::numEdges(const Graph& g){
- return 0;
+  Graph aux = g;
+  int count = 0;
+  while (!isEmpty(aux)) {
+    halfEdgeVertex* auxArc = aux->adjList;
+    while (!isEmptyArc(auxArc)) {
+      ++count;
+      auxArc = auxArc->next;
+    }
+    aux = aux->next;
+  }
+ return count/2;          //divido per 2 visto che il grafo non e' orientato
 }
 
 // Calcola e ritorna (nel secondo parametro) il grado del nodo. Fallisce
 // se il nodo non esiste
 bool graph::nodeDegree(Label l, int& degree, const Graph& g) {
+  degree = 0;                                     //reinizializzo degree a 0
+  Graph vertex = getVertex(g, l);
+  if(isEmpty(vertex)){
+    return false;
+  }
+  halfEdgeVertex* auxArc = vertex->adjList;
+  while (!isEmptyArc(auxArc)) {
+    ++degree;
+    auxArc = auxArc->next;
+  }
   return true;
 }
 
 // Verifica se i due vertici v1 e v2 sono adiacenti (ovvero se esiste un arco)
 bool graph::areAdjacent(Label v1, Label v2, const Graph& g) {
-  return true;
+  Graph vertex1 = getVertex(g, v1);
+  Graph vertex2 = getVertex(g, v2);
+  if(isEmpty(vertex1) || isEmpty(vertex2)){
+    return false;
+  }
+
+  halfEdgeVertex* auxArc = vertex1->adjList;
+  while (!isEmptyArc(auxArc->next) && auxArc->vertPtr != vertex2) {
+
+    auxArc = auxArc->next;
+  }
+  return(auxArc->vertPtr == vertex2);
+  //return true;
 }
 
 // Restituisce la lista di adiacenza di un vertice
 list::List graph::adjacentList(Label v1, const Graph& g) {
   list::List lst = list::createEmpty();
+  if(isEmpty(g) || emptyLabel == v1){
+    return lst;
+  }
+
+  Graph aux = getVertex(g, v1);
+  halfEdgeVertex* auxArc = aux->adjList;
+  while (!isEmptyArc(auxArc)) {
+    std::cout << "graph::adjacentList(): inserisco nella lista: " << auxArc->vertPtr->label << '\n';
+    list::addFront(auxArc->vertPtr->label, lst);
+    auxArc = auxArc->next;
+  }
+  std::cout << "graph::adjacentList(): fine lista!" << '\n';
   return lst;
 }
+
+//FUNZ AUX PER SETTARE TUTTE FLAG VISITED
+void setVisitedAll(bool b, const Graph g){
+  Graph aux = g;
+  while (!isEmpty(aux)) {
+    aux->visited = b;
+    aux = aux->next;
+  }
+}
+
+//FUNZ AUX RICORSIVA PER COSTRUIRE IL CAMMINO DELLA findPath
+bool visitDFS(Graph auxFrom, Graph auxTo, list::List &path){
+  auxFrom->visited = true;  //setto flag auxFrom to true
+  //list::addFront(auxFrom->label, path);
+
+  std::cout << t[level++] << "parto da: "<< auxFrom->label
+            << " per arrivare a "<< auxTo->label << '\n';
+
+  halfEdgeVertex* auxArc;
+
+  for(auxArc = auxFrom->adjList; !isEmptyArc(auxArc); auxArc = auxArc->next){
+    std::cout << "ho trovato " << auxArc->vertPtr->label << '\n';
+
+    if(auxArc->vertPtr->visited == true){   //flag == true -> continuo ciclo
+      std::cout << "ho trovato un true flag! con label = "<< auxArc->vertPtr->label << '\n';
+      continue;
+      //return false;
+    }
+
+    addFrontWithWeight(auxArc->vertPtr->label, auxArc->weight, path);
+      //aggiungo in cima a path il label visitato
+
+    if(auxArc->vertPtr->label == auxTo->label){
+      //ho trovato la destinazione nella lista di adiacenza
+      //list::addFront(auxTo->label, path); //inserisco la destinazione in path
+      return true;
+    }
+
+    if(visitDFS(auxArc->vertPtr, auxTo, path)){
+      return true;
+    }
+
+    removeTop(path);  //rimuovo dalla cima di path
+
+  }
+  --level;
+
+  return false;
+
+
+}
+
+bool Pathvisit(Graph auxFrom, Graph auxTo, list::List &path){
+  halfEdgeVertex* auxArc;
+  for(auxArc = auxFrom->adjList; isEmptyArc(auxArc); auxArc = auxArc->next){
+    if(auxArc->vertPtr->label != auxFrom->label){
+      //ho trovato la destinazione nella lista di adiacenza
+      //list::addFront(auxTo->label, path); //inserisco la destinazione in path
+      break;
+    }
+
+    if(auxArc->vertPtr->visited){
+      return false;
+    }
+
+  auxArc->vertPtr->visited = true;
+  std::cout << "Partenza Path da: "<< auxArc->vertPtr->label << '\n';
+
+  list::List auxList = path;
+  auxList = getnext(path);
+  //auxList = path->next;
+  //for( ; !isEmpty(auxArc->vertPtr); ){
+  while(!isEmpty(auxArc->vertPtr)){
+    addFrontWithWeight(auxArc->vertPtr->label, auxArc->weight, auxList);
+    if(auxArc->vertPtr->label != auxTo->label){   //Trovato arrivo
+      return true;
+    }
+    if(Pathvisit(auxFrom, auxTo, auxList)){
+      return true;
+    }
+  }
+  }
+  return false;
+}
+
 
 // Ritorna un cammino tra una citta' ed un altra
 // Il cammino da "v1" a "v2" alla fine sara' in "path"
@@ -218,6 +371,29 @@ list::List graph::adjacentList(Label v1, const Graph& g) {
 // La funzione rappresenta una variante della visita DFS
 
 void graph::findPath(Label v1, Label v2, list::List &path, int &len, const Graph& g) {
+  if(v1 == emptyLabel || v2 == emptyLabel || isEmpty(g)){
+    return;
+  }
+  Graph auxFrom, auxTo;
+  auxFrom = getVertex(g, v1);
+  auxTo = getVertex(g, v2);
+  if(isEmpty(auxTo) || isEmpty(auxFrom)){
+    return;
+  }
+  if(areAdjacent(v1, v2, g)){
+    std::cout << "\t\tI due punti sono adiacenti!" << '\n';
+    return;
+  }
+
+  level = 0;
+  addFrontWithWeight(auxFrom->label, 0, path);
+  setVisitedAll(false, g);   //sett tutti i flag dei vertex a false per fare la visita
+  //auxFrom->visited = true;
+  //visitDFS(auxFrom, auxTo, path);
+  Pathvisit(auxFrom, auxTo, path);
+
+  printList(path);
+
     return;
 }
 /*******************************************************************************************************/
@@ -229,6 +405,7 @@ void printCity(graph::Graph& g){
     return;
   }else{
     std::cout << "Citta': " << g->label << '\n';
+    std::cout << "\tVisited Flag: "<< g->visited << '\n';
     halfEdgeVertex* aux = g->adjList;
     while (!isEmptyArc(aux)) {
       printAdjacent(aux);

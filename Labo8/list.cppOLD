@@ -1,0 +1,111 @@
+#include "list.h"
+
+using namespace list;
+
+
+/****************************************************************/
+void list::clear(List& l){
+  while(l!=emptylist)
+  {
+    List aux= l;
+    while(aux->next!=emptylist)
+      aux=aux->next;
+    delete aux;
+  }
+  delete l;
+}
+
+
+/****************************************************************/
+void list::set(int pos, Elem e, List& l){ // "set" nel senso di "assegna un valore", non nel senso di "insieme"! E' una terminologia standard, non fate confusione con gli insiemi
+
+
+}
+
+
+/****************************************************************/
+void list::add(int pos, Elem e, List& l){ // aggiunge e nella posizione pos
+  //if
+  List auxprev=l;
+  for(int i,i<pos-1,i++)
+    auxprev=auxprev->next;
+  List added=new list;
+  added->elem=e;
+  added->next=auxprev->next;
+  auxprev->next=added;
+
+}
+
+/****************************************************************/
+void list::addBack(Elem e, List& l){ // aggiunge e in coda
+  {
+    if (isEmpty(l))
+    {
+      l= new list;
+      l->elem=e;
+      l->next=emptylist;
+
+    }
+    else
+    {
+    List aux=l;
+      while(aux->next!=emptylist)
+        aux=aux->next;
+      aux->next=new list;
+      aux->next->elem=e;
+      aux->next->next=emptylist;
+
+    }
+  }
+}
+
+
+/****************************************************************/
+void list::addFront(Elem e, List& l) // aggiunge e in testa
+{
+
+}
+
+/****************************************************************/
+void list::removePos(int pos, List& l){
+
+}
+
+
+List list::createEmpty(){
+  List l=emptylist;
+  return l;
+}
+
+/****************************************************************/
+Elem list::get(int pos, const List& l){
+  return emptyElem;
+}
+
+
+/****************************************************************/
+bool list::isEmpty(const List& l){
+  return (l==emptylist);
+}
+
+/****************************************************************/
+int list::size(const List& l){
+  int i=0;
+  List aux=l;
+  while(aux->next!=emptylist)
+    i++
+  return i;
+}
+
+
+/****************************************************************/
+void printList(const List& l){
+    List auxread=l
+ for(int i=0;i<size(l);i++)
+  {
+
+    cout << auxread->e << endl;
+    auxread=auxread->next;
+
+  }
+}

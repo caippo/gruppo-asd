@@ -12,9 +12,14 @@ typedef string Elem;      // tipo base, compatibile con il tipo Label dell'grafo
 
 const Elem emptyElem = "$#$#$";
 
-struct node;
 
-typedef node * List;
+struct list{
+  Elem elem;
+  list* next;
+};
+
+typedef list * List;
+const list::List emptylist = NULL;
 
 // ATTENZIONE: per la realizzazione del laboratorio 8 non vi serviranno tutte le seguenti funzioni ma solo un sottoinsieme
 void clear(List&);          /* "smantella" la lista */
